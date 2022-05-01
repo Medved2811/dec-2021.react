@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Posts, UserDetails, Users} from "./components";
+import css from './App.module.css'
+import {postServices} from "./services";
 
-function App() {
+const App = () => {
+    const [userDetails,setUserDetails] = useState(null)
+    const [posts,setPosts] = useState([])
+
+    const getUserId = async (userId)=>{
+        const {data}= await postServices.getPostByUserId(userId)
+        setPosts(data)
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <div className={css.wrap}>
+            <Users setUserDetails={setUserDetails}/>
+            {userDetails && <UserDetails userDetails={userDetails} getUserId={getUserId}/>}
+        </div>
+          <hr/>
+          <Posts posts={posts}/>
+      </div>
   );
-}
+};
 
 export default App;
