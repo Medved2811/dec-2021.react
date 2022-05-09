@@ -1,0 +1,8 @@
+.button {
+    background: aqua;
+    cursor: pointer;
+}
+.button:hover {
+    color: aqua;
+    background: deeppink;
+}
